@@ -1,10 +1,20 @@
+'''
+Function:
+    头歌平台自动签到脚本
+Author:
+    easechen
+GitHub address:
+    https://github.com/easechen/educoder_auto_signin/
+更新日期:
+    2021-4-12
+'''
 import requests
 import time
 import json
 
 # 账户和密码
-# userid = "1522****"
-# passwd = "abc***"
+# userid = "152****"
+# passwd = "abc****"
 
 def login(userid, passwd, login_api):
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
@@ -43,7 +53,7 @@ def getCourse(login, cookies):
         print(f'{i}、    {c["id"]}       {c["name"]}        {c["teacher"]["real_name"]}        {c["school"]}')
         i += 1
     try:
-        select = int(input("请输入要进入的课程（序号）："))
+        select = int(input("请输入要进入的课程："))
         courseID = courseJson['courses'][select-1]["id"]
     except:
         input("非法输入，已退出")
@@ -138,14 +148,16 @@ if __name__=='__main__':
                     isCon = input("当前没有签到，是否持续等待并自动签到？(y or n):")
                     if isCon in ['y', 'yes']:
                         print("-----------------------------------")
-                        print("正在等待签到开始······")
+                        print(f"正在等待签到开始······")
                         j = 0
-                        tuxing = ['|','\\','-','/']
+                        # tuxing = ['|','\\','-','/']
                         while(i == 0):
-                            j = (j+1) % 3
-                            print(f'{tuxing[j]}\b', end='')
+                            # j = (j+1) % 3
+                            # print(f'{tuxing[j]}\b')
+                            print(f"\r已等待{j}秒！", end='', flush=True)
                             i = signIn(selectCourse, "ongoing", r.cookies)        
-                            time.sleep(0.5)
+                            time.sleep(1)
+                            j += 1
                     else:
                         input("已取消，任意键退出")
                         exit(0)
