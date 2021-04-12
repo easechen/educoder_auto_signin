@@ -24,6 +24,7 @@ def getBaseInfo(r):
     return baseInfoDict
 
 def isLoginSuccess(r):
+    # print(r.text)
     if '错误的账号或密码' in r.text:
         return False
     else:
@@ -158,3 +159,6 @@ if __name__=='__main__':
                 print("没有这个选项")
             selectStatus = int(input("1、签到  2、查询历史签到 3、退出:"))
         input("任意键退出！") 
+    else:
+        print("用户名或密码错误！！")
+        input("任意键退出")
