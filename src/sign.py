@@ -106,6 +106,8 @@ def signIn(selectCourse, status, cookies):
         return False
 if __name__=='__main__':
     print("******头歌平台自动签到脚本******")
+    print("本脚本开源 https://github.com/easechen/educoder_auto_signin 如果觉得还可以，点个star吧~")
+    print("----------------------------------------------------------------")
     # ---------------------------------
     # 如果手动写入，则注释这段代码
     try:
