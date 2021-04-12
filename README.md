@@ -9,6 +9,10 @@
 1. 自动等待签到开始，并自动签到，无需知道签到码
 2. 查询历史签到
 
+## 演示
+
+![signin](https://cdn.jsdelivr.net/gh/easechen/blog-img/img/20210412215956.gif)
+
 ## 所需的库
 
 - requests
