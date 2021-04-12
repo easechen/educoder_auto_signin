@@ -3,8 +3,8 @@ import time
 import json
 
 # 账户和密码
-# userid = "15225995820"
-# passwd = "chen15225995820"
+# userid = "1522****"
+# passwd = "abc***"
 
 def login(userid, passwd, login_api):
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
@@ -108,10 +108,10 @@ if __name__=='__main__':
     # ---------------------------------
     # 如果手动写入，则注释这段代码
     try:
-        userid = int(input("enter your userid:"))
-        passwd = int(input("enter your password:"))
+        userid = input("enter your userid:")
+        passwd = input("enter your password:")
     except:
-        input("已退出")
+        input("非法！已退出")
     # ----------------------------------
     login_api = "https://data.educoder.net/api/accounts/login.json"
 
