@@ -43,7 +43,7 @@ def getCourse(login, cookies):
         print(f'{i}、    {c["id"]}       {c["name"]}        {c["teacher"]["real_name"]}        {c["school"]}')
         i += 1
     try:
-        select = int(input("请输入要进入的课程："))
+        select = int(input("请输入要进入的课程（序号）："))
         courseID = courseJson['courses'][select-1]["id"]
     except:
         input("非法输入，已退出")
