@@ -13,8 +13,8 @@ import time
 import json
 
 # 账户和密码
-# userid = "152****"
-# passwd = "abc****"
+# userid = "15225995"
+# passwd = "c59***"
 
 def login(userid, passwd, login_api):
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
@@ -26,6 +26,7 @@ def getBaseInfo(r):
     _educoder_session = r.cookies['_educoder_session']
     autologin_trustie = r.cookies['autologin_trustie']
     userDict = json.loads(r.text)
+    # print(userDict)
     name = userDict['name']
     school = userDict['school']
     login = userDict['login']
@@ -46,6 +47,7 @@ def getCourse(login, cookies):
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
     r = requests.get(getCourseApi, params=payload, cookies=cookies, headers=header)
     courseJson = json.loads(r.text)
+    # print(courseJson)
     # 遍历课程
     i = 1
     for c in courseJson['courses']:
@@ -77,6 +79,7 @@ def signInPost(attendance_id, attendance_mode, code, cookies):
 # 打印签到信息
 def printSignMsg(ser):
     srJson = json.loads(ser.text)
+    # print(srJson['normal_count'])
     i = 1
     print("序号  日期        签到码")
     for ser in srJson["attendances"]:
@@ -84,23 +87,22 @@ def printSignMsg(ser):
         i += 1
 
 # 签到
-def signIn(selectCourse, status, cookies):
+def signIn(selectCourse, select, cookies):
+    searchApi = "https://data.educoder.net/api/courses/{0}/attendances.json?coursesId={0}&id={0}&status={1}&page=1".format(selectCourse, "all")
+    header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
+    ser = requests.get(searchApi, cookies=cookies, headers = header)
+    srJson = json.loads(ser.text)
+
     # 查询历史记录
-    if status == 'history':
-        searchApi = "https://data.educoder.net/api/courses/{0}/attendances.json?coursesId={0}&id={0}&status={1}&page=1".format(selectCourse, status)
-        header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
-        ser = requests.get(searchApi, cookies=cookies, headers = header)
+    if select == 2:
         printSignMsg(ser)
-    if status == 'ongoing':
-        searchApi = "https://data.educoder.net/api/courses/{0}/attendances.json?coursesId={0}&id={0}&status={1}&page=1".format(selectCourse, status)
-        header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
-        ser = requests.get(searchApi, cookies=cookies, headers=header)
-        srJson = json.loads(ser.text)
+
+    elif select == 1:
         # 如果没有正在签到
-        if srJson['normal_count'] == 0:
+        if srJson['attendances'][0]['status'] == 'history':
             return 0
         # 如果有一个在签到，则直接签到
-        if srJson['normal_count'] == 1:
+        else:
             attendance_mode = srJson["attendances"][0]['mode']
             code = srJson["attendances"][0]['attendance_code']
             attendance_id = srJson["attendances"][0]['id']
@@ -138,11 +140,11 @@ if __name__=='__main__':
 
         # 打印课程信息，返回要签到的课程ID
         selectCourse = getCourse(infoDict['login'], r.cookies)
-        selectStatus = int(input("1、签到  2、查询历史签到 3、退出:"))
+        selectStatus = int(input("1、签到  2、查询所有签到 3、退出:"))
         while(selectStatus != 3):
             # 签到
             if selectStatus == 1:
-                i = signIn(selectCourse, "ongoing", r.cookies)
+                i = signIn(selectCourse, 1, r.cookies)
                 # 如果没有签到
                 if i == 0:
                     isCon = input("当前没有签到，是否持续等待并自动签到？(y or n):")
@@ -155,7 +157,7 @@ if __name__=='__main__':
                             # j = (j+1) % 3
                             # print(f'{tuxing[j]}\b')
                             print(f"\r已等待{j}秒！", end='', flush=True)
-                            i = signIn(selectCourse, "ongoing", r.cookies)        
+                            i = signIn(selectCourse, 1, r.cookies)        
                             time.sleep(1)
                             j += 1
                     else:
@@ -168,7 +170,7 @@ if __name__=='__main__':
                     print("签到出错，请提出issue！")
             # 历史记录查询 
             elif selectStatus == 2:
-                signIn(selectCourse, "history", r.cookies)
+                signIn(selectCourse, 2, r.cookies)
             else:
                 print("没有这个选项")
             selectStatus = int(input("1、签到  2、查询历史签到 3、退出:"))
