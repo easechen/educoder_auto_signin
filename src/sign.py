@@ -173,7 +173,7 @@ if __name__=='__main__':
                 signIn(selectCourse, 2, r.cookies)
             else:
                 print("没有这个选项")
-            selectStatus = int(input("1、签到  2、查询历史签到 3、退出:"))
+            selectStatus = int(input("1、签到  2、查询所有签到 3、退出:"))
         input("任意键退出！") 
     else:
         print("%s"%(json.loads(r.text)['message']))
