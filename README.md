@@ -15,6 +15,8 @@
 
 ![signin](https://cdn.jsdelivr.net/gh/easechen/blog-img/img/20210412215956.gif)
 
+![12](https://cdn.jsdelivr.net/gh/easechen/blog-img/img/20210516233939.png)
+
 ## 使用方法
 
 ### 直接运行exe文件
