@@ -13,7 +13,6 @@
 
 ## 演示
 
-![signin](https://cdn.jsdelivr.net/gh/easechen/blog-img/img/20210412215956.gif)
 
 ![12](https://cdn.jsdelivr.net/gh/easechen/blog-img/img/20210516233939.png)
 
