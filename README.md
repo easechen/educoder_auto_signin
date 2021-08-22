@@ -11,10 +11,6 @@
 1. 自动等待签到开始，并自动签到，无需知道签到码
 2. 查询历史签到
 
-## 演示
-
-
-![12](https://cdn.jsdelivr.net/gh/easechen/blog-img/img/20210516233939.png)
 
 ## 使用方法
 
